@@ -1,4 +1,80 @@
 
+var clickListener;
+var poly;
+var count = 0;
+var points = new Array();
+var markers = new Array();
+var map;
+
+function initMap() {
+
+  var polygonId = 1;
+  var zoomLevel = 5;
+  var l_shape;
+  var retx;
+  var rety;
+  var polyName;
+  var polyDesc;
+  var get = new htmldb_Get(null, $v('pFlowId'), 'APPLICATION_PROCESS=getPoints', 2);
+  get.addParam('x01', polygonId);
+
+  //l_Return = get.get(null,'<getPointVals>','</getPointVals>');
+  l_Return = get.get('XML');
+
+
+  get = null;
+  retx = l_Return.getElementsByTagName("getPointVals")[0];
+  rety = retx.childNodes[0];
+  if (rety !== undefined) { l_shape = rety.nodeValue; }
+
+  //alert('zoomLevel: ' + zoomLevel);
+  //alert(l_shape);
+  drawShape(zoomLevel, l_shape);
+  retx = l_Return.getElementsByTagName("polyDescription")[0];
+  rety = retx.childNodes[0];
+  if (rety !== undefined) { polyDesc = rety.nodeValue; } else { polyDesc = ''; }
+  retx = l_Return.getElementsByTagName("polyName")[0];
+  rety = retx.childNodes[0];
+  polyName = rety.nodeValue;
+  f_setPoly(polygonId, polyName, polyDesc, zoomLevel, l_shape);
+
+
+
+   map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: { lat: -33.872, lng: 151.252 },
+  });
+
+  // Define the LatLng coordinates for the outer path.
+  var outerCoords = [
+    { lat: -32.364, lng: 153.207 }, // north west
+    { lat: -35.364, lng: 153.207 }, // south west
+    { lat: -35.364, lng: 158.207 }, // south east
+    { lat: -32.364, lng: 158.207 }  // north east
+  ];
+
+  // Define the LatLng coordinates for an inner path.
+  var innerCoords1 = [
+    { lat: -33.364, lng: 154.207 },
+    { lat: -34.364, lng: 154.207 },
+    { lat: -34.364, lng: 155.207 },
+    { lat: -33.364, lng: 155.207 }
+  ];
+
+  // Define the LatLng coordinates for another inner path.
+  var innerCoords2 = [
+    { lat: -33.364, lng: 156.207 },
+    { lat: -34.364, lng: 156.207 },
+    { lat: -34.364, lng: 157.207 },
+    { lat: -33.364, lng: 157.207 }
+  ];
+
+  map.data.add({
+    geometry: new google.maps.Data.Polygon([outerCoords,
+      innerCoords1,
+      innerCoords2])
+  })
+}
 function drawShape(zLevel, shapePoints) {
   var pointArr = new Array();
   if (shapePoints !== undefined)
