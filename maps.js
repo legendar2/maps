@@ -6,7 +6,7 @@ var points = new Array();
 var markers = new Array();
 var map;
 
-function initMap() {
+function initGoogleMap() {
 
   var polygonId = 1;
   var zoomLevel = 5;
