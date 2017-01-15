@@ -21,7 +21,6 @@ function initMap() {
   //l_Return = get.get(null,'<getPointVals>','</getPointVals>');
   l_Return = get.get('XML');
 
-
   get = null;
   retx = l_Return.getElementsByTagName("getPointVals")[0];
   rety = retx.childNodes[0];
