@@ -42,7 +42,7 @@ function initMap() {
   retx = l_Return.getElementsByTagName("polyName")[0];
   rety = retx.childNodes[0];
   polyName = rety.nodeValue;
-  f_setPoly(polygonId, polyName, polyDesc, zoomLevel, l_shape);
+ // f_setPoly(polygonId, polyName, polyDesc, zoomLevel, l_shape);
 
 
 
