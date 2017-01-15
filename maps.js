@@ -8,42 +8,10 @@ var map;
 
 function initMap() {
 
-  var polygonId = 1;
-  var zoomLevel = 5;
-  var l_shape;
-  var retx;
-  var rety;
-  var polyName;
-  var polyDesc;
-  var get = new htmldb_Get(null, $v('pFlowId'), 'APPLICATION_PROCESS=getPoints', 2);
-  get.addParam('x01', polygonId);
-
-  //l_Return = get.get(null,'<getPointVals>','</getPointVals>');
-  l_Return = get.get('XML');
-
-  get = null;
-  retx = l_Return.getElementsByTagName("getPointVals")[0];
-  rety = retx.childNodes[0];
-  if (rety !== undefined) { l_shape = rety.nodeValue; }
-
-  //alert('zoomLevel: ' + zoomLevel);
-  //alert(l_shape);
-
    map = new google.maps.Map(document.getElementById('map'), {
     zoom: 6,
     center: { lat: -33.872, lng: 151.252 },
   });
-
-  drawShape(zoomLevel, l_shape);
-  retx = l_Return.getElementsByTagName("polyDescription")[0];
-  rety = retx.childNodes[0];
-  if (rety !== undefined) { polyDesc = rety.nodeValue; } else { polyDesc = ''; }
-  retx = l_Return.getElementsByTagName("polyName")[0];
-  rety = retx.childNodes[0];
-  polyName = rety.nodeValue;
- // f_setPoly(polygonId, polyName, polyDesc, zoomLevel, l_shape);
-
-
 
   // Define the LatLng coordinates for the outer path.
   var outerCoords = [
@@ -74,6 +42,12 @@ function initMap() {
       innerCoords1,
       innerCoords2])
   })
+
+  var polygonId = 1;
+  var zoomLevel = 5;
+
+ get_ajax_points(polygonId,zoomLevel) ;
+
 }
 function drawShape(zLevel, shapePoints) {
   var pointArr = new Array();
@@ -194,21 +168,24 @@ function createMarker(point) {
     });
     drawOverlay();
   }
+
   
-   function f_setPoly(samplePolygonId,polyName,polyDescription,polyZoomLevel,polyShape)
-   { 
-     var get = new htmldb_Get(null,28990,'APPLICATION_PROCESS=dummyProc',0);
-     get.add('P11_SAMPLE_POLYGON_ID', samplePolygonId);
-     get.add('P11_NAME', polyName);
-     get.add('P11_DESCRIPTION', polyDescription);
-     get.add('P11_ZOOM_LEVEL', polyZoomLevel);
-     get.add('P11_SHAPE', polyShape);
-     gReturn = get.get();
-     get = null;
-     $x_Value('P11_SAMPLE_POLYGON_ID', samplePolygonId);
-     $x_Value('P11_NAME', polyName);
-     $x_Value('P11_DESCRIPTION', polyDescription);
-     $x_Value('P11_ZOOM_LEVEL', polyZoomLevel);
-     $x_Value('P11_SHAPE', polyShape);
-   }
+function get_ajax_points(polygonId,zoomLevel) {
+   var l_shape;
+   var retx;
+   var rety;
+   var polyName;
+   var polyDesc;
+  var get = new htmldb_Get(null, $v('pFlowId'), 'APPLICATION_PROCESS=getPoints', 2);
+   get.addParam('x01',polygonId);
+   //l_Return = get.get(null,'<getPointVals>','</getPointVals>');
+   l_Return = get.get('XML');
+   get = null; 
+   retx = l_Return.getElementsByTagName("getPointVals")[0];
+   rety = retx.childNodes[0];
+   l_shape = rety.nodeValue;
+   //alert('zoomLevel: ' + zoomLevel);
+   //alert(l_shape);
+   drawShape(zoomLevel,l_shape);
+}  
 }     
