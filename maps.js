@@ -34,7 +34,7 @@ function initMap() {
     zoom: 6,
     center: { lat: -33.872, lng: 151.252 },
   });
-  
+
   drawShape(zoomLevel, l_shape);
   retx = l_Return.getElementsByTagName("polyDescription")[0];
   rety = retx.childNodes[0];
@@ -195,4 +195,21 @@ function createMarker(point) {
     });
     drawOverlay();
   }
+  
+   function f_setPoly(samplePolygonId,polyName,polyDescription,polyZoomLevel,polyShape)
+   { 
+     var get = new htmldb_Get(null,28990,'APPLICATION_PROCESS=dummyProc',0);
+     get.add('P11_SAMPLE_POLYGON_ID', samplePolygonId);
+     get.add('P11_NAME', polyName);
+     get.add('P11_DESCRIPTION', polyDescription);
+     get.add('P11_ZOOM_LEVEL', polyZoomLevel);
+     get.add('P11_SHAPE', polyShape);
+     gReturn = get.get();
+     get = null;
+     $x_Value('P11_SAMPLE_POLYGON_ID', samplePolygonId);
+     $x_Value('P11_NAME', polyName);
+     $x_Value('P11_DESCRIPTION', polyDescription);
+     $x_Value('P11_ZOOM_LEVEL', polyZoomLevel);
+     $x_Value('P11_SHAPE', polyShape);
+   }
 }     
