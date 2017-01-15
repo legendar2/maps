@@ -29,6 +29,12 @@ function initMap() {
 
   //alert('zoomLevel: ' + zoomLevel);
   //alert(l_shape);
+
+   map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: { lat: -33.872, lng: 151.252 },
+  });
+  
   drawShape(zoomLevel, l_shape);
   retx = l_Return.getElementsByTagName("polyDescription")[0];
   rety = retx.childNodes[0];
@@ -39,11 +45,6 @@ function initMap() {
   f_setPoly(polygonId, polyName, polyDesc, zoomLevel, l_shape);
 
 
-
-   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 6,
-    center: { lat: -33.872, lng: 151.252 },
-  });
 
   // Define the LatLng coordinates for the outer path.
   var outerCoords = [
