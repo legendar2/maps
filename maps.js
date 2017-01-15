@@ -46,7 +46,7 @@ function initMap() {
   var polygonId = 1;
   var zoomLevel = 5;
 
- get_ajax_points(polygonId,zoomLevel) ;
+ //get_ajax_points(polygonId,zoomLevel) ;
 
 }
 function drawShape(zLevel, shapePoints) {
