@@ -53,6 +53,7 @@ function initMap() {
 
 
 function drawShape(zLevel, shapePoints) {
+  return;
   var pointArr = new Array();
   if (shapePoints)
     pointArr = shapePoints.split(',');
@@ -105,7 +106,7 @@ return;
       points.push(markers[i].getLatLng());
     }
     // Polygon mode
-    points.push(markers[0].getLatLng());
+    points.push(markersw[0].getLatLng());
   }
   poly = new GPolygon(points, lineColor, lineWeight, lineOpacity, fillColor, fillOpacity);
   map.addOverlay(poly);
