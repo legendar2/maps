@@ -48,8 +48,8 @@ function initMap() {
   var zoomLevel = 5;
 
  get_ajax_points(polygonId,zoomLevel) ;
-
 }
+
 function drawShape(zLevel, shapePoints) {
   var pointArr = new Array();
   if (shapePoints !== undefined)
@@ -58,12 +58,12 @@ function drawShape(zLevel, shapePoints) {
   clearMap();
   // position map at first point
    map.setCenter(new google.maps.LatLng(pointArr[0], pointArr[1]), zLevel);
-  // // create shape (points and markers)
-  // for (var i = 0, len = pointArr.length; i < len; ++i) {
-  //   if (i % 2 == 0) {
-  //     createSimpleMarker(new google.maps.LatLng(pointArr[i], pointArr[(i + 1)]));
-  //   }
-  // }
+  // create shape (points and markers)
+  for (var i = 0, len = pointArr.length; i < len; ++i) {
+    if (i % 2 == 0) {
+      createSimpleMarker(new google.maps.LatLng(pointArr[i], pointArr[(i + 1)]));
+    }
+  }
   google.maps.event.removeListener(clickListener);
 }
 
@@ -100,10 +100,10 @@ function clearMap() {
   // Clear current map and reset arrays
   google.maps.event.removeListener(clickListener);
   if (poly) { map.removeOverlay(poly); }
-  //while(overlays[0])
-  //{
-  //  overlays.pop().setMap(null);
-  //}
+  while(overlays[0])
+  {
+   overlays.pop().setMap(null);
+  }
   points.length = 0;
   markers.length = 0;
   count = 0;
