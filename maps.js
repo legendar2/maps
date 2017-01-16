@@ -6,13 +6,6 @@ var points = new Array();
 var markers = new Array();
 var map;
 
-function initMap() {
-
-   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 6,
-    center: { lat: -33.872, lng: 151.252 },
-  });
-
   // Define the LatLng coordinates for the outer path.
   var outerCoords = [
     { lat: -32.364, lng: 153.207 }, // north west
@@ -37,6 +30,14 @@ function initMap() {
     { lat: -33.364, lng: 157.207 }
   ];
 
+
+function initMap() {
+
+   map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: { lat: -33.872, lng: 151.252 },
+  });
+
   map.data.add({
     geometry: new google.maps.Data.Polygon([outerCoords,
       innerCoords1,
@@ -46,7 +47,7 @@ function initMap() {
   var polygonId = 1;
   var zoomLevel = 5;
 
- //get_ajax_points(polygonId,zoomLevel) ;
+ get_ajax_points(polygonId,zoomLevel) ;
 
 }
 function drawShape(zLevel, shapePoints) {
