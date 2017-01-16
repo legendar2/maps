@@ -33,7 +33,7 @@ var innerCoords2 = [
 
 function drawShape(zLevel, shapePoints) {
   var pointArr = new Array();
-  if (shapePoints !== undefined)
+  if (shapePoints)
     pointArr = shapePoints.split(',');
   // reset map
   clearMap();
