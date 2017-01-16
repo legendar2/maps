@@ -31,6 +31,27 @@ var innerCoords2 = [
 ];
 
 
+
+function initMap() {
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: { lat: -33.872, lng: 151.252 },
+  });
+
+  map.data.add({
+    geometry: new google.maps.Data.Polygon([outerCoords,
+      innerCoords1,
+      innerCoords2])
+  })
+
+  var polygonId = 1;
+  var zoomLevel = 5;
+
+  get_ajax_points(polygonId, zoomLevel);
+}
+
+
 function drawShape(zLevel, shapePoints) {
   var pointArr = new Array();
   if (shapePoints)
@@ -48,9 +69,24 @@ function drawShape(zLevel, shapePoints) {
   google.maps.event.removeListener(clickListener);
 }
 
-
+function setShape() {
+  var shapeString = '';
+  if (points.length > 2) {
+    for (var n = 0; n < points.length; n++) {
+      shapeString = shapeString + ',' + points[n].y + ',' + points[n].x;
+    }
+    shapeString = shapeString.substr(1);
+    $x_Value('P11_SHAPE', shapeString);
+    $x_Value('P11_ZOOM_LEVEL', map.getZoom());
+    doSubmit('SUBMIT');
+  } else {
+    alert('There must be at least three points to a polygon.');
+  }
+}
 
 function drawOverlay() {
+return;
+
   if (poly) { map.removeOverlay(poly); }
 
   if (editing == true) {
@@ -165,28 +201,8 @@ function get_ajax_points(polygonId, zoomLevel) {
   get = null;
   retx = l_Return.getElementsByTagName("getPointVals")[0];
   rety = retx.childNodes[0];
-  l_shape = rety!=null? rety.nodeValue:null;
+  l_shape = rety != null ? rety.nodeValue : null;
   //alert('zoomLevel: ' + zoomLevel);
   //alert(l_shape);
   drawShape(zoomLevel, l_shape);
 }
-
-
-function initMap() {
-
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 6,
-    center: { lat: -33.872, lng: 151.252 },
-  });
-
-  map.data.add({
-    geometry: new google.maps.Data.Polygon([outerCoords,
-      innerCoords1,
-      innerCoords2])
-  })
-
-  var polygonId = 1;
-  var zoomLevel = 5;
-
-  get_ajax_points(polygonId, zoomLevel);
-} 
