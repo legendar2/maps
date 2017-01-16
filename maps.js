@@ -57,7 +57,7 @@ function drawShape(zLevel, shapePoints) {
   // reset map
   clearMap();
   // position map at first point
-  // map.setCenter(new google.maps.LatLng(pointArr[0], pointArr[1]), zLevel);
+   map.setCenter(new google.maps.LatLng(pointArr[0], pointArr[1]), zLevel);
   // // create shape (points and markers)
   // for (var i = 0, len = pointArr.length; i < len; ++i) {
   //   if (i % 2 == 0) {
