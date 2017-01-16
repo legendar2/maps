@@ -165,7 +165,7 @@ function get_ajax_points(polygonId, zoomLevel) {
   get = null;
   retx = l_Return.getElementsByTagName("getPointVals")[0];
   rety = retx.childNodes[0];
-  l_shape = rety.nodeValue;
+  l_shape = rety!=null? rety.nodeValue:null;
   //alert('zoomLevel: ' + zoomLevel);
   //alert(l_shape);
   drawShape(zoomLevel, l_shape);
