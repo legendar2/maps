@@ -6,49 +6,30 @@ var points = new Array();
 var markers = new Array();
 var map;
 
-  // Define the LatLng coordinates for the outer path.
-  var outerCoords = [
-    { lat: -32.364, lng: 153.207 }, // north west
-    { lat: -35.364, lng: 153.207 }, // south west
-    { lat: -35.364, lng: 158.207 }, // south east
-    { lat: -32.364, lng: 158.207 }  // north east
-  ];
+// Define the LatLng coordinates for the outer path.
+var outerCoords = [
+  { lat: -32.364, lng: 153.207 }, // north west
+  { lat: -35.364, lng: 153.207 }, // south west
+  { lat: -35.364, lng: 158.207 }, // south east
+  { lat: -32.364, lng: 158.207 }  // north east
+];
 
-  // Define the LatLng coordinates for an inner path.
-  var innerCoords1 = [
-    { lat: -33.364, lng: 154.207 },
-    { lat: -34.364, lng: 154.207 },
-    { lat: -34.364, lng: 155.207 },
-    { lat: -33.364, lng: 155.207 }
-  ];
+// Define the LatLng coordinates for an inner path.
+var innerCoords1 = [
+  { lat: -33.364, lng: 154.207 },
+  { lat: -34.364, lng: 154.207 },
+  { lat: -34.364, lng: 155.207 },
+  { lat: -33.364, lng: 155.207 }
+];
 
-  // Define the LatLng coordinates for another inner path.
-  var innerCoords2 = [
-    { lat: -33.364, lng: 156.207 },
-    { lat: -34.364, lng: 156.207 },
-    { lat: -34.364, lng: 157.207 },
-    { lat: -33.364, lng: 157.207 }
-  ];
+// Define the LatLng coordinates for another inner path.
+var innerCoords2 = [
+  { lat: -33.364, lng: 156.207 },
+  { lat: -34.364, lng: 156.207 },
+  { lat: -34.364, lng: 157.207 },
+  { lat: -33.364, lng: 157.207 }
+];
 
-
-function initMap() {
-
-   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 6,
-    center: { lat: -33.872, lng: 151.252 },
-  });
-
-  map.data.add({
-    geometry: new google.maps.Data.Polygon([outerCoords,
-      innerCoords1,
-      innerCoords2])
-  })
-
-  var polygonId = 1;
-  var zoomLevel = 5;
-
- get_ajax_points(polygonId,zoomLevel) ;
-}
 
 function drawShape(zLevel, shapePoints) {
   var pointArr = new Array();
@@ -57,7 +38,7 @@ function drawShape(zLevel, shapePoints) {
   // reset map
   clearMap();
   // position map at first point
-   map.setCenter(new google.maps.LatLng(pointArr[0], pointArr[1]), zLevel);
+  map.setCenter(new google.maps.LatLng(pointArr[0], pointArr[1]), zLevel);
   // create shape (points and markers)
   for (var i = 0, len = pointArr.length; i < len; ++i) {
     if (i % 2 == 0) {
@@ -100,9 +81,8 @@ function clearMap() {
   // Clear current map and reset arrays
   google.maps.event.removeListener(clickListener);
   if (poly) { map.removeOverlay(poly); }
-  while(overlays[0])
-  {
-   overlays.pop().setMap(null);
+  while (overlays[0]) {
+    overlays.pop().setMap(null);
   }
   points.length = 0;
   markers.length = 0;
@@ -169,24 +149,44 @@ function createMarker(point) {
     });
     drawOverlay();
   }
+}
 
-  
-function get_ajax_points(polygonId,zoomLevel) {
-   var l_shape;
-   var retx;
-   var rety;
-   var polyName;
-   var polyDesc;
+
+function get_ajax_points(polygonId, zoomLevel) {
+  var l_shape;
+  var retx;
+  var rety;
+  var polyName;
+  var polyDesc;
   var get = new htmldb_Get(null, $v('pFlowId'), 'APPLICATION_PROCESS=getPoints', 2);
-   get.addParam('x01',polygonId);
-   //l_Return = get.get(null,'<getPointVals>','</getPointVals>');
-   l_Return = get.get('XML');
-   get = null; 
-   retx = l_Return.getElementsByTagName("getPointVals")[0];
-   rety = retx.childNodes[0];
-   l_shape = rety.nodeValue;
-   //alert('zoomLevel: ' + zoomLevel);
-   //alert(l_shape);
-   drawShape(zoomLevel,l_shape);
-}  
-}     
+  get.addParam('x01', polygonId);
+  //l_Return = get.get(null,'<getPointVals>','</getPointVals>');
+  l_Return = get.get('XML');
+  get = null;
+  retx = l_Return.getElementsByTagName("getPointVals")[0];
+  rety = retx.childNodes[0];
+  l_shape = rety.nodeValue;
+  //alert('zoomLevel: ' + zoomLevel);
+  //alert(l_shape);
+  drawShape(zoomLevel, l_shape);
+}
+
+
+function initMap() {
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: { lat: -33.872, lng: 151.252 },
+  });
+
+  map.data.add({
+    geometry: new google.maps.Data.Polygon([outerCoords,
+      innerCoords1,
+      innerCoords2])
+  })
+
+  var polygonId = 1;
+  var zoomLevel = 5;
+
+  get_ajax_points(polygonId, zoomLevel);
+} 
