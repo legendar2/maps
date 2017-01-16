@@ -113,7 +113,7 @@ return;
 
 
 function clearMap() {
-
+return;
   // Clear current map and reset arrays
   google.maps.event.removeListener(clickListener);
   if (poly) { map.removeOverlay(poly); }
