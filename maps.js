@@ -81,9 +81,9 @@ function clearMap() {
   // Clear current map and reset arrays
   google.maps.event.removeListener(clickListener);
   if (poly) { map.removeOverlay(poly); }
-  while (overlays[0]) {
-    overlays.pop().setMap(null);
-  }
+  // while (overlays[0]) {
+  //   overlays.pop().setMap(null);
+  // }
   points.length = 0;
   markers.length = 0;
   count = 0;
